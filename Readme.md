@@ -65,7 +65,7 @@ def background_subtraction_knn(frame):
 
 Cada filtro y técnica tiene sus propias ventajas y limitaciones. En general, CLAHE y el filtro de mediana mostraron mejores resultados en términos de preservación de detalles y reducción de ruido, siendo útiles en imágenes donde la claridad y el contraste local son importantes.
 
-![Resultados](/parte_1/resultados.jpeg)
+![Resultados](resultados.jpeg)
 
 Como se puede apreciar en la anterior imagen, los filtros aplicados según los respectivos resultados, permiten apreciar que los filtros con mayor resolución fueron CLAHE y el fltro de la mediana ya que los aspectos de la imagen son claros y permiten apreciar mejor los detalles.
 

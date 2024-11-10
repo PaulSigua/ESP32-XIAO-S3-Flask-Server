@@ -26,7 +26,26 @@
      <div class="containerHeader">
           <h1>Video Streaming</h1>
           <img src="{{ url_for('static', filename='Header.webp') }}" alt="Image header" width="50%">
+          <label for="salt">Sal: <span id="saltVal">5</span>%</label>
+          <input type="range" id="salt" name="salt" min="0" max="50" value="5" oninput="updateNoise()">
+          <label for="pepper">Pimienta: <span id="pepperVal">5</span>%</label>
+          <input type="range" id="pepper" name="pepper" min="0" max="50" value="5" oninput="updateNoise()">
      </div>
      <img src="{{ url_for('video_stream') }}">
+     
+     <script>
+          function updateNoise() {
+               let salt = document.getElementById("salt").value;
+               let pepper = document.getElementById("pepper").value;
+               document.getElementById("saltVal").innerText = salt;
+               document.getElementById("pepperVal").innerText = pepper;
+
+               fetch("/set_noise", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `salt=${salt}&pepper=${pepper}`
+               });
+          }
+     </script>
 </body>
 </html>
