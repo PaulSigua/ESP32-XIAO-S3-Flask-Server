@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de Procesamiento</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            text-align: center; }
+        .image-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            justify-content: center; 
+        }
+        .image-item { 
+            width: 200px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            padding: 10px; 
+        }
+        .image-item img { 
+            width: 100%; 
+            height: auto; 
+        }
+        .size-header { 
+            margin-top: 20px; 
+            font-size: 18px; 
+            color: #333; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Resultados de Procesamiento de Múltiples Imágenes</h1>
+    {% for filename, sizes in processed_images.items() %}
+        <h2>Resultados para {{ filename }}</h2>
+        {% for size, images in sizes.items() %}
+            <div class="size-header">Mascara de Tamaño: {{ size }}</div>
+            <div class="image-grid">
+                {% for name, image_file in images.items() %}
+                    <div class="image-item">
+                        <h3>{{ name|capitalize }}</h3>
+                        <img src="{{ url_for('get_image', filename=image_file) }}" alt="{{ name }}">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cargar Imágenes</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 20px; 
+        }
+        .upload-section { 
+            margin: 20px; 
+        }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 40px;
+            cursor: pointer;
+            text-align: center;
+            color: #999;
+            font-size: 16px;
+        }
+        .drop-zone.dragover {
+            border-color: #0066cc;
+            background-color: #f0f8ff;
+        }
+        .file-list {
+            margin-top: 50px;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            max-width: 300px;
+            position: absolute;
+            left: 20px; /* Alinea la lista a la izquierda de la pantalla */
+        }
+        .file-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .file-list li {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            padding: 10px;
+            gap: 10px;
+            font-size: 15px;
+            color: #333;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #17375a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #3d70a7;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #004085;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sube tus Imágenes para Procesar</h1>
+    <div class="upload-section">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <div class="drop-zone" id="drop-zone">
+                <p>Puedes arrastrar y soltar imágenes aquí para añadirlas</p>
+                <p>Tipos de archivo aceptados: .jpg, .png, .jpeg</p>
+                <input type="file" name="images" multiple required style="display: none;" id="file-input">
+            </div>
+            <div class="file-list" id="file-list">
+            </div>
+            <button type="submit">Subir y Procesar</button>
+        </form>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', () => {
+            updateFileList(fileInput.files);
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            fileInput.files = e.dataTransfer.files;
+            updateFileList(e.dataTransfer.files);
+        });
+
+        function updateFileList(files) {
+            fileList.innerHTML = ''; // Limpiamos la lista
+            const ul = document.createElement('ul');
+            Array.from(files).forEach(file => {
+                const li = document.createElement('li');
+                li.textContent = file.name; // Mostrar el nombre del archivo
+                ul.appendChild(li);
+            });
+            fileList.appendChild(ul);
+        }
+    </script>
+</body>
+</html>
